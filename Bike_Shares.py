@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.optimize import brentq
 from scipy import stats
@@ -58,5 +59,54 @@ df = pd.get_dummies(df, columns = ["Seasons"])
 print(df.dtypes)
 print(df.dtypes.value_counts())
 print('New Number of Features: %d'%(df.shape[1])) 
+
+#Análisis descriptivo de los Datos
+
+# Gráfico de líneas
+sns.lineplot(x='Date', y='Rented Bike Count', data=df)
+plt.title('Evolución del número de bicicletas rentadas')
+plt.xlabel('Fecha')
+plt.ylabel('Número de bicicletas rentadas')
+plt.show()
+
+#Histograma de Frecuencia
+sns.histplot(data=df, x='Rented Bike Count')
+plt.title("Distribución del número de bicicletas rentadas")
+plt.xlabel("Número de bicicletas rentadas")
+plt.ylabel("Frecuencia")
+plt.show()
+
+#Diagramas de Caja 
+sns.boxplot(x='Functioning Day',y='Temperature(C)', data=df)
+plt.title("Relación entre los días laborales y la temperatura")
+plt.xlabel("día Laboral")
+plt.ylabel("Temperatura")
+plt.show()
+
+#Diagramas de dispersión
+sns.scatterplot(x='Temperature(C)', y='Solar Radiation (MJ/m2)', data=df)
+plt.title("Relación entre Temperatura y Radiación solar")
+plt.xlabel("Temperatura (C)")
+plt.ylabel("Radiación Solar (MJ/m2)")
+plt.show()
+
+#Diagramas de violin
+sns.violinplot(x='Holiday', y='Wind speed (m/s)', data=df)
+plt.title("Relación entre los días festivos y la velocidad del viento")
+plt.xlabel("Holiday")
+plt.ylabel("Velocidad del viento")
+plt.show()
+
+#Histogramas por cada variable y dispersión entre variables
+sns.pairplot(df,)
+
+#Diagramas de dispersión y tendencia entre variables de entrada y variable de respuesta
+sns.pairplot(df, x_vars=['Temperature(C)','Wind speed (m/s)','Visibility (10m)','Humidity(%)'], y_vars='Rented Bike Count', height=7, aspect=0.7, kind='reg')
+
+#Matriz de Correlación 
+correlation_matrix = df.corr()
+sns.heatmap(correlation_matrix, annot=True)
+plt.show()
+
 
 
